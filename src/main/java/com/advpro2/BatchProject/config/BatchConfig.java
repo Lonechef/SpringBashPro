@@ -3,11 +3,13 @@ package com.advpro2.BatchProject.config;
 import com.advpro2.BatchProject.entity.WalMartdata;
 import com.advpro2.BatchProject.repository.WallMartrepo;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.job.builder.JobBuilder;
+import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.item.data.RepositoryItemWriter;
@@ -24,8 +26,10 @@ import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.transaction.PlatformTransactionManager;
 
+
+
 @Configuration
-@EnableBatchProcessing
+//@EnableBatchProcessing
 @AllArgsConstructor
 public class BatchConfig {
 
@@ -43,6 +47,7 @@ public class BatchConfig {
     // Create Reader
     @Bean
     @StepScope
+
     public FlatFileItemReader<WalMartdata> dataReader() {
         FlatFileItemReader<WalMartdata> itemReader = new FlatFileItemReader<>();
         try {
@@ -61,12 +66,13 @@ public class BatchConfig {
 
     }
 
+
     // Line Mapper useful to convert each line as a Java Object
     private LineMapper<WalMartdata> lineMapper() {
         DefaultLineMapper<WalMartdata> lineMapper = new DefaultLineMapper<>();
         DelimitedLineTokenizer lineTokenizer = new DelimitedLineTokenizer();
         lineTokenizer.setStrict(false);
-        lineTokenizer.setNames("id", "weeklysales", "temperature", "fuelprice", "unemployment");
+        lineTokenizer.setNames("id","weeklysales","temperature","fuelprice","unemployment");
 
         BeanWrapperFieldSetMapper<WalMartdata> fieldSetMapper = new BeanWrapperFieldSetMapper<>();
         fieldSetMapper.setTargetType(WalMartdata.class);
@@ -107,6 +113,7 @@ public class BatchConfig {
     @Bean
     public Job job() {
         return new JobBuilder("job-1", jobRepository)
+                .incrementer(new RunIdIncrementer())
                 .start(step())
                 .build();
     }
