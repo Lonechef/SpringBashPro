@@ -51,7 +51,7 @@ public class BatchConfig {
     public FlatFileItemReader<WalMartdata> dataReader() {
         FlatFileItemReader<WalMartdata> itemReader = new FlatFileItemReader<>();
         try {
-            itemReader.setResource(new FileSystemResource("src/main/resources/Walmart_Sales.csv"));
+            itemReader.setResource(new FileSystemResource("src/main/resources/Walmart.csv"));
 
             itemReader.setName("csv-reader");
             itemReader.setLinesToSkip(1);
@@ -72,7 +72,8 @@ public class BatchConfig {
         DefaultLineMapper<WalMartdata> lineMapper = new DefaultLineMapper<>();
         DelimitedLineTokenizer lineTokenizer = new DelimitedLineTokenizer();
         lineTokenizer.setStrict(false);
-        lineTokenizer.setNames("id","weeklysales","temperature","fuelprice","unemployment");
+        lineTokenizer.setDelimiter(",");
+        lineTokenizer.setNames("id", "weeklysales", "temperature", "fuelprice", "unemployment");
 
         BeanWrapperFieldSetMapper<WalMartdata> fieldSetMapper = new BeanWrapperFieldSetMapper<>();
         fieldSetMapper.setTargetType(WalMartdata.class);
