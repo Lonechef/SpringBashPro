@@ -8,11 +8,19 @@
 
         @Override
         public WalMartdata process(WalMartdata item) throws  Exception{
-              if(item.getFuelPrice()>2.5){
+              if(item.getFuelPrice()>2.7){
                 item.setPricrinr(item.getFuelPrice()*83.47);
+                if(item.getPricrinr()>270){
+                    item.setTemp_celcius((item.getTemperature()-32)*5/9);
+                }
+                else{
+                    item.setTemp_celcius(item.getTemperature());
+                }
+
               }
               else{
-                  item.setPricrinr(item.getPricrinr());
+                  item.setPricrinr(item.getFuelPrice());
+                  item.setTemp_celcius(item.getTemperature());
               }
             return item;
         }

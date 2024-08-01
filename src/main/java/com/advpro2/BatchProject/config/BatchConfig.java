@@ -29,7 +29,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 
 @Configuration
-@EnableBatchProcessing
+
 @AllArgsConstructor
 public class BatchConfig {
 
@@ -42,12 +42,9 @@ public class BatchConfig {
 
     @Autowired
     private PlatformTransactionManager transactionManager;
-
-
     // Create Reader
     @Bean
     @StepScope
-
     public FlatFileItemReader<WalMartdata> dataReader() {
         FlatFileItemReader<WalMartdata> itemReader = new FlatFileItemReader<>();
         try {
@@ -63,7 +60,6 @@ public class BatchConfig {
             System.out.println("Unable to fetch CSV file");
             return  null;
         }
-
     }
     // Line Mapper useful to convert each line as a Java Object
     private LineMapper<WalMartdata> lineMapper() {
@@ -81,13 +77,11 @@ public class BatchConfig {
 
         return lineMapper;
     }
-
     // Create Processor
     @Bean
     public WalMartdataConfig walMartdataConfig() {
         return new WalMartdataConfig();
     }
-
     // Create Writer
     @Bean
     public RepositoryItemWriter<WalMartdata> customWriter() {
@@ -96,7 +90,6 @@ public class BatchConfig {
         repositoryWriter.setMethodName("save");
         return repositoryWriter;
     }
-
     // Create Step
     @Bean
     public Step step() {

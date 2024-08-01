@@ -33,4 +33,7 @@ public class WalMartdata {
 
     @Column(name="Price_Inr")
     private double pricrinr;
+
+    @Column(name="temp_Celcius")
+    private double temp_celcius;
 }
