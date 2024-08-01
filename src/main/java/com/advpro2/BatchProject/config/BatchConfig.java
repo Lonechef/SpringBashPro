@@ -29,7 +29,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 
 @Configuration
-//@EnableBatchProcessing
+@EnableBatchProcessing
 @AllArgsConstructor
 public class BatchConfig {
 
@@ -65,8 +65,6 @@ public class BatchConfig {
         }
 
     }
-
-
     // Line Mapper useful to convert each line as a Java Object
     private LineMapper<WalMartdata> lineMapper() {
         DefaultLineMapper<WalMartdata> lineMapper = new DefaultLineMapper<>();

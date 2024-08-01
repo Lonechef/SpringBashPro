@@ -30,4 +30,7 @@ public class WalMartdata {
 
     @Column(name = "Unemployment")
     private double unemployment;
+
+    @Column(name="Price_Inr")
+    private double pricrinr;
 }
